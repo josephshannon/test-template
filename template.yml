@@ -2,9 +2,9 @@ apiVersion: backstage.io/v1beta2
 kind: Template
 # some metadata about the template itself
 metadata:
-  name: shiftup-react-template
-  title: ShiftUp React Template
-  description: scaffolder react shiftup template test
+  name: v1beta2-demo
+  title: Test Action template
+  description: scaffolder v1beta2 template demo
 spec:
   owner: backstage/techdocs-core
   type: service
@@ -29,6 +29,10 @@ spec:
         repoUrl:
           title: Repository Location
           type: string
+          ui:field: RepoUrlPicker
+          ui:options:
+            allowedHosts:
+              - github.com
 
   # here's the steps that are executed in series in the scaffolder backend
   steps:
@@ -40,10 +44,18 @@ spec:
         values:
           name: '{{ parameters.name }}'
 
+    - id: fetch-docs
+      name: Fetch Docs
+      action: fetch:plain
+      input:
+        targetPath: ./community
+        url: https://github.com/backstage/community/tree/main/backstage-community-sessions
+
     - id: publish
       name: Publish
-      action: publish:gitlab
+      action: publish:github
       input:
+        allowedHosts: ['github.com']
         description: 'This is {{ parameters.name }}'
         repoUrl: '{{ parameters.repoUrl }}'
 
