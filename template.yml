@@ -48,8 +48,8 @@ spec:
       name: Fetch Docs
       action: fetch:plain
       input:
-        targetPath: ./community
-        url: https://github.com/backstage/community/tree/main/backstage-community-sessions
+        targetPath: ./client
+        url: ./client
 
     - id: publish
       name: Publish
